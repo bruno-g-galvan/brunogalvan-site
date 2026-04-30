@@ -1,0 +1,11 @@
+---
+title: "Hello"
+description: "What this site is, and what's coming."
+author: "Bruno Galván"
+date: 2026-04-30
+categories: [meta]
+---
+
+The site is live. Real posts are on the way — I'm working on the first one now, plus the initial round of projects.
+
+If you want to follow along, the [RSS feed](/blog.xml) is the simplest way. Or [send me a message](/about.html#get-in-touch) — I read everything.

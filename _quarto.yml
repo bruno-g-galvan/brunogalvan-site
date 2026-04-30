@@ -1,21 +1,40 @@
 project:
   type: website
+  output-dir: _site
 
 website:
-  title: "Bruno Galvan"
+  title: "Bruno Galván"
+  description: "Bioinformatician — structural bioinformatics & ML for genomics"
+  site-url: https://brunogalvan.com.ar
+  repo-url: https://github.com/bruno-g-galvan/brunogalvan-site
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: about.qmd
+        text: About
+      - text: Projects
+        href: projects.qmd
+      - text: Blog
+        href: blog.qmd
+    right:
+      - icon: github
+        href: https://github.com/bruno-g-galvan
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://linkedin.com/in/bruno-galvan
+        aria-label: LinkedIn
+      - text: ES
+        href: about-es.qmd
+        aria-label: Versión en español
+  page-footer:
+    left: "© 2026 Bruno Galván · Buenos Aires"
+    right: "Built with [Quarto](https://quarto.org)"
 
 format:
   html:
-    theme:
-      - cosmo
-      - brand
+    theme: cosmo
     css: styles.css
     toc: true
-
-
-
+    code-copy: true
+    code-overflow: wrap

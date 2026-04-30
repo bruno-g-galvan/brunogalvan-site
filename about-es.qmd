@@ -1,0 +1,79 @@
+---
+title: "Sobre mí"
+description: "Bruno Galván — bioinformático trabajando en estructura de proteínas y machine learning para genómica."
+image: images/bruno-headshot.png
+about:
+  template: trestles
+  image-shape: round
+  image-width: 14em
+  links:
+    - icon: github
+      text: GitHub
+      href: https://github.com/bruno-g-galvan
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/bruno-galvan
+    - icon: envelope
+      text: Email
+      href: mailto:hello@brunogalvan.com.ar
+lang: es
+---
+
+## Hola, soy Bruno
+
+Soy bioinformático y vivo en Buenos Aires. Trabajo en la intersección entre **estructura de proteínas** y **machine learning aplicado a genómica**. Construyo herramientas open source que ayudan a investigadores a conectar ambos mundos — porque entender qué *hace* una variante genética muchas veces requiere mirar la proteína que produce.
+
+Actualmente estoy terminando mi carrera de grado mientras trabajo en la industria. Mucho de mi mejor aprendizaje pasa en esa brecha entre lo que enseñan en la facultad y lo que los proyectos reales realmente necesitan — escribo acá para documentar lo que voy aprendiendo en el camino.
+
+## En qué estoy trabajando ahora
+
+- **foldflow** — un pipeline en Nextflow que procesa secuencias de proteínas a través de ESMFold, con control de calidad y reportes HTML compartibles
+- **proteinscope** — un paquete Python para detectar pockets y evaluar el impacto de mutaciones sobre estructuras proteicas
+- Un benchmark de modelos de lenguaje de proteínas como ESM-2 contra variantes de ClinVar, comparando qué tan bien predicen patogenicidad los modelos open source frente a herramientas como AlphaMissense
+
+Podés seguir el avance en la [página de proyectos](projects.qmd) o en el [blog](blog.qmd).
+
+## Cómo llegué hasta acá
+
+Estoy terminando mi carrera de grado en Buenos Aires y, en algún momento del recorrido, me fui metiendo en biología computacional y ya no pude salir. Lo que arrancó como curiosidad por entender cómo funcionan los genomas se transformó en una fascinación por los algoritmos y modelos que los hacen interpretables — y de ahí, en querer construir las herramientas yo mismo en lugar de solo usarlas.
+
+En paralelo a la facultad, trabajo en la industria biotecnológica/farmacéutica, donde tengo la oportunidad de aplicar bioinformática estructural y machine learning a problemas reales. Esa combinación — fundamentos académicos durante el día, trabajo aplicado en la trinchera — es lo que moldea mi forma de pensar este campo. Aprendí que la distancia entre "esto funciona en el paper" y "esto funciona en producción" es enorme, y muchos de los problemas más interesantes viven en esa distancia.
+
+Lo que me llevó a este nicho específico fue darme cuenta de cuánta señal biológica se pierde cuando se analizan datos de secuencia sin pensar en la estructura. AlphaFold cambió lo que es posible — pero las herramientas que lo rodean siguen siendo crudas, y la mayoría de los biólogos no tienen tiempo para aprender diez frameworks nuevos solo para hacer una pregunta estructural. Quiero ayudar a cerrar esa brecha.
+
+## Lo que valoro en mi trabajo
+
+- **Reproducibilidad innegociable.** Cada proyecto incluye archivos de entorno, una imagen de Docker y tests. Si no podés hacer `git clone` y ejecutarlo, no cuenta.
+- **Open source por defecto.** Todos mis proyectos están bajo licencia MIT salvo que haya una razón fuerte para lo contrario. El código detrás de un paywall no hace avanzar al campo.
+- **Documentación como entregable de primera categoría.** Una herramienta que nadie sabe cómo usar no es una herramienta. Escribo READMEs, tutoriales y posts con el mismo cuidado con el que escribo el código.
+- **Benchmarks honestos.** Prefiero publicar un resultado que dice "este modelo no funcionó tan bien como prometía" antes que sobrevender lo que construí.
+- **Aprender en público.** Estoy temprano en mi carrera y no lo escondo. El blog refleja lo que estoy aprendiendo en este momento, no lo que ya domino.
+
+## Cómo puedo ayudarte
+
+Si sos investigador, estudiante, o parte de un equipo trabajando en:
+
+- Armar pipelines reproducibles de bioinformática estructural
+- Aplicar modelos de lenguaje de proteínas o de ADN a tus datos
+- Construir herramientas interactivas para explorar datos genómicos o estructurales
+- Diseñar análisis de efecto de variantes a partir de datasets públicos
+
+Hablemos — escribime al mail de abajo.
+
+Si sos estudiante en Argentina o LATAM y querés meterte en bioinformática, escribime. Me acuerdo (muy recientemente) de lo confuso que fue ordenar qué aprender y en qué orden, y me encantaría ayudarte a acortar esa curva.
+
+## Cómo contactarme
+
+Las mejores formas de llegar a mí:
+
+- **Email:** hello@brunogalvan.com.ar — para consultas serias, colaboraciones, o preguntas largas
+- **GitHub:** [@bruno-g-galvan](https://github.com/bruno-g-galvan) — abrí un issue en cualquiera de mis repos, o dejá una estrella si te resultó útil
+- **LinkedIn:** [/in/bruno-galvan](https://linkedin.com/in/bruno-galvan) — para conversaciones profesionales
+
+Escribo de a poco sobre lo que voy aprendiendo. El [blog](blog.qmd) tiene un feed RSS si preferís seguirlo por ahí.
+
+---
+
+*Este sitio está hecho con [Quarto](https://quarto.org) y hospedado en GitHub Pages. El código fuente está [en GitHub](https://github.com/bruno-g-galvan/brunogalvan-site).*
+
+*[Read this page in English →](about.qmd)*

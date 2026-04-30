@@ -1,5 +1,79 @@
 ---
 title: "About"
+description: "Bruno Galván — bioinformatician working on protein structure and machine learning for genomics."
+image: images/bruno-headshot.png
+about:
+  template: trestles
+  image-shape: round
+  image-width: 14em
+  links:
+    - icon: github
+      text: GitHub
+      href: https://github.com/bruno-g-galvan
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/bruno-gabriel-galvan/
+    - icon: envelope
+      text: Email
+      href: mailto:hello@brunogalvan.com.ar
+lang: en
 ---
 
-About this site
+## Hi, I'm Bruno
+
+I'm a bioinformatician based in Buenos Aires, working at the intersection of **protein structure** and **machine learning for genomics**. I build open-source tools that help researchers connect the two — because understanding what a genetic variant *does* often requires looking at the protein it produces.
+
+I'm currently finishing my undergraduate degree while working in industry. Most of my best learning happens in that gap between what universities teach and what real projects actually need — I write here to document what I'm figuring out along the way.
+
+## What I'm working on right now
+
+- **foldflow** — a Nextflow pipeline that takes protein sequences through ESMFold prediction with proper QC and shareable HTML reports
+- **proteinscope** — a small Python package for characterizing pockets and scoring mutations on protein structures
+- A benchmark of protein language models like ESM-2 against ClinVar variants, comparing how well open models predict pathogenicity versus tools like AlphaMissense
+
+You can follow along on the [projects page](projects.qmd) or in the [blog](blog.qmd).
+
+## How I got here
+
+I'm currently completing my undergraduate degree in Buenos Aires, and somewhere along the way I got pulled into computational biology and never looked back. What started as curiosity about how genomes work turned into a fascination with the algorithms and models that make sense of them — and from there, into wanting to actually build the tools myself rather than just use them.
+
+In parallel with my studies, I work in the biotech/pharma industry, where I get to apply structural bioinformatics and machine learning to real problems. That combination — academic foundations during the day, applied work in the trenches — is what shapes how I think about this field. I've learned that the gap between "this works in the paper" and "this works in production" is enormous, and most of the interesting problems live in that gap.
+
+What pulled me toward this specific niche was realizing how much biological signal still gets lost when people analyze sequence data without thinking about structure. AlphaFold changed what's possible — but the tooling around it is still rough, and most biologists don't have time to learn ten new frameworks just to ask a structural question. I want to help close that gap.
+
+## What I value in my work
+
+- **Reproducibility is non-negotiable.** Every project ships with environment files, a Docker image, and tests. If you can't `git clone` and run it, it doesn't count.
+- **Open source by default.** All my projects are MIT-licensed unless there's a strong reason otherwise. Code that sits behind a paywall doesn't move the field.
+- **Documentation as a first-class deliverable.** A tool no one knows how to use isn't a tool. I write READMEs, tutorials, and blog posts as carefully as I write the code itself.
+- **Honest benchmarks.** I'd rather publish a result that says "this model didn't work as well as advertised" than overstate what I built.
+- **Learning in public.** I'm still early in my career and I don't pretend otherwise. The blog reflects what I'm actually figuring out, not what I've already mastered.
+
+## How I can help you
+
+If you're a researcher, student, or team working on:
+
+- Setting up reproducible structural bioinformatics pipelines
+- Applying protein or DNA language models to your data
+- Building interactive tools for exploring genomic or protein data
+- Designing a variant-effect analysis from public datasets
+
+I'm happy to chat — send me an email at the address below.
+
+If you're a student in Argentina or LATAM trying to break into bioinformatics, please reach out. I remember (very recently) how confusing it was to figure out what to learn and in what order, and I'd love to help shorten that curve for you.
+
+## Get in touch
+
+The best ways to reach me:
+
+- **Email:** hello@brunogalvan.com.ar — for serious inquiries, collaborations, or longer questions
+- **GitHub:** [@bruno-g-galvan](https://github.com/bruno-g-galvan) — open an issue on any of my repos, or just star things you find useful
+- **LinkedIn:** [/in/bruno-galvan](https://linkedin.com/in/bruno-galvan) — for professional conversations
+
+I write occasionally about what I'm learning. The [blog](blog.qmd) has an RSS feed if you'd rather follow that way.
+
+---
+
+*This site is built with [Quarto](https://quarto.org) and hosted on GitHub Pages. Source code is [on GitHub](https://github.com/bruno-g-galvan/brunogalvan-site).*
+
+*[Leer esta página en español →](about-es.qmd)*

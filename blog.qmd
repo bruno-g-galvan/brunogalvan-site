@@ -1,0 +1,17 @@
+---
+title: "Blog"
+listing:
+  contents: posts
+  type: default
+  sort: "date desc"
+  categories: true
+  sort-ui: false
+  filter-ui: false
+  feed: true
+  fields: [date, title, reading-time, description, categories]
+page-layout: full
+---
+
+Notes on structural bioinformatics, machine learning for genomics, and reproducible computational biology.
+
+The blog has an [RSS feed](blog.xml) if you'd rather follow that way.

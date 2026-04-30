@@ -15,3 +15,5 @@ Thumbs.db
 # Editor
 .vscode/
 *.swp
+/.quarto/
+**/*.quarto_ipynb
