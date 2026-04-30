@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-04-30">
+<meta name="description" content="A Nextflow pipeline for protein structure prediction with ESMFold, including QC reports and shareable HTML output.">
 
-<title>Bruno Galvan</title>
+<title>foldflow – Bruno Galván</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -42,7 +44,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-4897d45d2f75ed4f519693be625836c5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-6dce83697ef593b6f21f66f8d1a1696b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -83,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Bruno Galvan</span>
+    <span class="navbar-title">Bruno Galván</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -100,6 +102,30 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./projects.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/bruno-g-galvan"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/bruno-galvan"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about-es.html"> 
+<span class="menu-text">ES</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -111,22 +137,49 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#status" id="toc-status" class="nav-link active" data-scroll-target="#status">Status</a></li>
+  <li><a href="#what-it-does" id="toc-what-it-does" class="nav-link" data-scroll-target="#what-it-does">What it does</a></li>
+  <li><a href="#why-it-exists" id="toc-why-it-exists" class="nav-link" data-scroll-target="#why-it-exists">Why it exists</a></li>
+  <li><a href="#tech-stack" id="toc-tech-stack" class="nav-link" data-scroll-target="#tech-stack">Tech stack</a></li>
+  <li><a href="#coming-soon" id="toc-coming-soon" class="nav-link" data-scroll-target="#coming-soon">Coming soon</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Bruno Galvan</h1>
-</div>
+<h1 class="title">foldflow</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">pipeline</div>
+    <div class="quarto-category">structural-biology</div>
+    <div class="quarto-category">nextflow</div>
+    <div class="quarto-category">esmfold</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    A Nextflow pipeline for protein structure prediction with ESMFold, including QC reports and shareable HTML output.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 30, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -136,10 +189,39 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This is a Quarto website.</p>
-<p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
+<section id="status" class="level2">
+<h2 class="anchored" data-anchor-id="status">Status</h2>
+<p>🚧 In active development.</p>
+</section>
+<section id="what-it-does" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-does">What it does</h2>
+<p><code>foldflow</code> is a Nextflow pipeline that takes a FASTA file of protein sequences and runs them through ESMFold prediction, producing structures, quality control plots, and a shareable HTML summary report per protein.</p>
+</section>
+<section id="why-it-exists" class="level2">
+<h2 class="anchored" data-anchor-id="why-it-exists">Why it exists</h2>
+<p>Most labs run AlphaFold or ESMFold ad-hoc, which makes results hard to share, hard to reproduce, and hard to compare across runs. <code>foldflow</code> packages the whole workflow — from sequence input to QC-checked output — into a single reproducible pipeline.</p>
+</section>
+<section id="tech-stack" class="level2">
+<h2 class="anchored" data-anchor-id="tech-stack">Tech stack</h2>
+<ul>
+<li><strong>Nextflow</strong> for orchestration</li>
+<li><strong>ESMFold</strong> (via Hugging Face) for prediction</li>
+<li><strong>Biopython, py3Dmol</strong> for analysis and visualization</li>
+<li><strong>Docker / Singularity</strong> containers</li>
+<li><strong>GitHub Actions</strong> for CI</li>
+</ul>
+</section>
+<section id="coming-soon" class="level2">
+<h2 class="anchored" data-anchor-id="coming-soon">Coming soon</h2>
+<ul>
+<li>Public repository with CI tests</li>
+<li>Docker image on GHCR</li>
+<li>Architecture diagram and walkthrough blog post</li>
+<li>Submission as a community pipeline to nf-core</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -215,7 +297,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/bruno-g-galvan\.github\.io\/brunogalvan-site\/");
+        var filterRegex = new RegExp("https:\/\/brunogalvan\.com\.ar");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -543,6 +625,19 @@ ul.task-list li input[type="checkbox"] {
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Bruno Galván · Buenos Aires</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
 
 
 

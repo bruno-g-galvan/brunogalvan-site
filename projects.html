@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Bruno Galván — bioinformatician working on protein structure and machine learning for genomics.">
 
-<title>About – Bruno Galván</title>
+<title>Projects – Bruno Galván</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -34,10 +33,13 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
@@ -70,7 +72,65 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-image','listing-date','listing-title','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -97,11 +157,11 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
+    <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./projects.html"> 
+    <a class="nav-link active" href="./projects.html" aria-current="page"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
@@ -132,118 +192,87 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-  <ul>
-  <li><a href="#hi-im-bruno" id="toc-hi-im-bruno" class="nav-link active" data-scroll-target="#hi-im-bruno">Hi, I’m Bruno</a></li>
-  <li><a href="#what-im-working-on-right-now" id="toc-what-im-working-on-right-now" class="nav-link" data-scroll-target="#what-im-working-on-right-now">What I’m working on right now</a></li>
-  <li><a href="#how-i-got-here" id="toc-how-i-got-here" class="nav-link" data-scroll-target="#how-i-got-here">How I got here</a></li>
-  <li><a href="#what-i-value-in-my-work" id="toc-what-i-value-in-my-work" class="nav-link" data-scroll-target="#what-i-value-in-my-work">What I value in my work</a></li>
-  <li><a href="#how-i-can-help-you" id="toc-how-i-can-help-you" class="nav-link" data-scroll-target="#how-i-can-help-you">How I can help you</a></li>
-  <li><a href="#get-in-touch" id="toc-get-in-touch" class="nav-link" data-scroll-target="#get-in-touch">Get in touch</a></li>
-  </ul>
-</nav>
-    </div>
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZXNtZm9sZA==">esmfold <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bmV4dGZsb3c=">nextflow <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cGlwZWxpbmU=">pipeline <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3RydWN0dXJhbC1iaW9sb2d5">structural-biology <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<div class="quarto-about-trestles">
-  <div class="about-entity">
-    <img src="images/bruno-headshot.png" class="about-image
-  round " style="height: 14em; width: 14em;">
+<main class="content column-page-left" id="quarto-document-content">
+
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About</h1>
+<h1 class="title">Projects</h1>
 </div>
-<div>
-  <div class="description">
-    Bruno Galván — bioinformatician working on protein structure and machine learning for genomics.
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+  
+    
   </div>
-</div>
-<div class="quarto-title-meta">
-  </div>
+  
+
+
 </header>
-    <div class="about-links">
-  <a href="https://github.com/bruno-g-galvan" class="about-link" rel="" target="">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">GitHub</span>
-  </a>
-  <a href="https://linkedin.com/in/bruno-gabriel-galvan/" class="about-link" rel="" target="">
-    <i class="bi bi-linkedin"></i>
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="mailto:hello@brunogalvan.com.ar" class="about-link" rel="" target="">
-    <i class="bi bi-envelope"></i>
-     <span class="about-link-text">Email</span>
-  </a>
+
+
+<p>I work on open-source tools at the intersection of protein structure and machine learning for genomics. Each project is documented end-to-end, with code, examples, and a write-up of the design choices.</p>
+<p>If you find any of these useful — or want to collaborate — <a href="./about.html#get-in-touch">send me an email</a>.</p>
+
+
+
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="cGlwZWxpbmUlMkNzdHJ1Y3R1cmFsLWJpb2xvZ3klMkNuZXh0ZmxvdyUyQ2VzbWZvbGQ=" data-listing-date-sort="1777507200000" data-listing-file-modified-sort="1777519642125" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="129">
+<div class="thumbnail"><a href="./projects/foldflow/index.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./projects/foldflow/index.html" class="no-external">foldflow</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('cGlwZWxpbmU='); return false;">pipeline</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c3RydWN0dXJhbC1iaW9sb2d5'); return false;">structural-biology</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bmV4dGZsb3c='); return false;">nextflow</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZXNtZm9sZA=='); return false;">esmfold</div>
+
 </div>
-  </div>
-  <div class="about-contents"><main class="content" id="quarto-document-content">
-
-<section id="hi-im-bruno" class="level2">
-<h2 data-anchor-id="hi-im-bruno">Hi, I’m Bruno</h2>
-<p>I’m a bioinformatician based in Buenos Aires, working at the intersection of <strong>protein structure</strong> and <strong>machine learning for genomics</strong>. I build open-source tools that help researchers connect the two — because understanding what a genetic variant <em>does</em> often requires looking at the protein it produces.</p>
-<p>I’m currently finishing my undergraduate degree while working in industry. Most of my best learning happens in that gap between what universities teach and what real projects actually need — I write here to document what I’m figuring out along the way.</p>
-</section>
-<section id="what-im-working-on-right-now" class="level2">
-<h2 data-anchor-id="what-im-working-on-right-now">What I’m working on right now</h2>
-<ul>
-<li><strong>foldflow</strong> — a Nextflow pipeline that takes protein sequences through ESMFold prediction with proper QC and shareable HTML reports</li>
-<li><strong>proteinscope</strong> — a small Python package for characterizing pockets and scoring mutations on protein structures</li>
-<li>A benchmark of protein language models like ESM-2 against ClinVar variants, comparing how well open models predict pathogenicity versus tools like AlphaMissense</li>
-</ul>
-<p>You can follow along on the <a href="./projects.html">projects page</a> or in the <a href="./blog.html">blog</a>.</p>
-</section>
-<section id="how-i-got-here" class="level2">
-<h2 data-anchor-id="how-i-got-here">How I got here</h2>
-<p>I’m currently completing my undergraduate degree in Buenos Aires, and somewhere along the way I got pulled into computational biology and never looked back. What started as curiosity about how genomes work turned into a fascination with the algorithms and models that make sense of them — and from there, into wanting to actually build the tools myself rather than just use them.</p>
-<p>In parallel with my studies, I work in the biotech/pharma industry, where I get to apply structural bioinformatics and machine learning to real problems. That combination — academic foundations during the day, applied work in the trenches — is what shapes how I think about this field. I’ve learned that the gap between “this works in the paper” and “this works in production” is enormous, and most of the interesting problems live in that gap.</p>
-<p>What pulled me toward this specific niche was realizing how much biological signal still gets lost when people analyze sequence data without thinking about structure. AlphaFold changed what’s possible — but the tooling around it is still rough, and most biologists don’t have time to learn ten new frameworks just to ask a structural question. I want to help close that gap.</p>
-</section>
-<section id="what-i-value-in-my-work" class="level2">
-<h2 data-anchor-id="what-i-value-in-my-work">What I value in my work</h2>
-<ul>
-<li><strong>Reproducibility is non-negotiable.</strong> Every project ships with environment files, a Docker image, and tests. If you can’t <code>git clone</code> and run it, it doesn’t count.</li>
-<li><strong>Open source by default.</strong> All my projects are MIT-licensed unless there’s a strong reason otherwise. Code that sits behind a paywall doesn’t move the field.</li>
-<li><strong>Documentation as a first-class deliverable.</strong> A tool no one knows how to use isn’t a tool. I write READMEs, tutorials, and blog posts as carefully as I write the code itself.</li>
-<li><strong>Honest benchmarks.</strong> I’d rather publish a result that says “this model didn’t work as well as advertised” than overstate what I built.</li>
-<li><strong>Learning in public.</strong> I’m still early in my career and I don’t pretend otherwise. The blog reflects what I’m actually figuring out, not what I’ve already mastered.</li>
-</ul>
-</section>
-<section id="how-i-can-help-you" class="level2">
-<h2 data-anchor-id="how-i-can-help-you">How I can help you</h2>
-<p>If you’re a researcher, student, or team working on:</p>
-<ul>
-<li>Setting up reproducible structural bioinformatics pipelines</li>
-<li>Applying protein or DNA language models to your data</li>
-<li>Building interactive tools for exploring genomic or protein data</li>
-<li>Designing a variant-effect analysis from public datasets</li>
-</ul>
-<p>I’m happy to chat — send me an email at the address below.</p>
-<p>If you’re a student in Argentina or LATAM trying to break into bioinformatics, please reach out. I remember (very recently) how confusing it was to figure out what to learn and in what order, and I’d love to help shorten that curve for you.</p>
-</section>
-<section id="get-in-touch" class="level2">
-<h2 data-anchor-id="get-in-touch">Get in touch</h2>
-<p>The best ways to reach me:</p>
-<ul>
-<li><strong>Email:</strong> hello@brunogalvan.com.ar — for serious inquiries, collaborations, or longer questions</li>
-<li><strong>GitHub:</strong> <a href="https://github.com/bruno-g-galvan"><span class="citation" data-cites="bruno-g-galvan">@bruno-g-galvan</span></a> — open an issue on any of my repos, or just star things you find useful</li>
-<li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/bruno-galvan">/in/bruno-galvan</a> — for professional conversations</li>
-</ul>
-<p>I write occasionally about what I’m learning. The <a href="./blog.html">blog</a> has an RSS feed if you’d rather follow that way.</p>
-<hr>
-<p><em>This site is built with <a href="https://quarto.org">Quarto</a> and hosted on GitHub Pages. Source code is <a href="https://github.com/bruno-g-galvan/brunogalvan-site">on GitHub</a>.</em></p>
-<p><em><a href="./about-es.html">Leer esta página en español →</a></em></p>
-
-
-</section>
-</main></div>
+<div class="delink listing-description"><a href="./projects/foldflow/index.html" class="no-external">
+<p>A Nextflow pipeline for protein structure prediction with ESMFold, including QC reports and shareable HTML output.</p>
+</a></div>
 </div>
- <!-- /main -->
+<div class="metadata">
+<a href="./projects/foldflow/index.html" class="no-external">
+<div class="listing-date">
+Apr 30, 2026
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     

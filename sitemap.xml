@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://bruno-g-galvan.github.io/brunogalvan-site/index.html</loc>
-    <lastmod>2026-04-30T02:47:28.919Z</lastmod>
+    <loc>https://brunogalvan.com.ar/mnt/user-data/outputs/posts/welcome/index.html</loc>
+    <lastmod>2026-04-30T03:27:22.125Z</lastmod>
   </url>
   <url>
-    <loc>https://bruno-g-galvan.github.io/brunogalvan-site/about.html</loc>
-    <lastmod>2026-04-30T02:47:28.919Z</lastmod>
+    <loc>https://brunogalvan.com.ar/about.html</loc>
+    <lastmod>2026-04-30T03:27:22.124Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brunogalvan.com.ar/about-es.html</loc>
+    <lastmod>2026-04-30T03:27:22.124Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brunogalvan.com.ar/projects/foldflow/index.html</loc>
+    <lastmod>2026-04-30T03:27:22.125Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brunogalvan.com.ar/blog.html</loc>
+    <lastmod>2026-04-30T03:27:22.124Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brunogalvan.com.ar/projects.html</loc>
+    <lastmod>2026-04-30T03:27:22.125Z</lastmod>
+  </url>
+  <url>
+    <loc>https://brunogalvan.com.ar/index.html</loc>
+    <lastmod>2026-04-30T03:27:22.124Z</lastmod>
   </url>
 </urlset>

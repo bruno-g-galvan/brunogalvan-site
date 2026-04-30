@@ -1,16 +1,205 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Bruno Galvan",
+    "objectID": "mnt/user-data/outputs/posts/welcome/index.html",
+    "href": "mnt/user-data/outputs/posts/welcome/index.html",
+    "title": "Hello",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "The site is live. Real posts are on the way — I’m working on the first one now, plus the initial round of projects.\nIf you want to follow along, the RSS feed is the simplest way. Or send me a message — I read everything."
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site"
+    "text": "I’m a bioinformatician based in Buenos Aires, working at the intersection of protein structure and machine learning for genomics. I build open-source tools that help researchers connect the two — because understanding what a genetic variant does often requires looking at the protein it produces.\nI’m currently finishing my undergraduate degree while working in industry. Most of my best learning happens in that gap between what universities teach and what real projects actually need — I write here to document what I’m figuring out along the way."
+  },
+  {
+    "objectID": "about.html#hi-im-bruno",
+    "href": "about.html#hi-im-bruno",
+    "title": "About",
+    "section": "",
+    "text": "I’m a bioinformatician based in Buenos Aires, working at the intersection of protein structure and machine learning for genomics. I build open-source tools that help researchers connect the two — because understanding what a genetic variant does often requires looking at the protein it produces.\nI’m currently finishing my undergraduate degree while working in industry. Most of my best learning happens in that gap between what universities teach and what real projects actually need — I write here to document what I’m figuring out along the way."
+  },
+  {
+    "objectID": "about.html#what-im-working-on-right-now",
+    "href": "about.html#what-im-working-on-right-now",
+    "title": "About",
+    "section": "What I’m working on right now",
+    "text": "What I’m working on right now\n\nfoldflow — a Nextflow pipeline that takes protein sequences through ESMFold prediction with proper QC and shareable HTML reports\nproteinscope — a small Python package for characterizing pockets and scoring mutations on protein structures\nA benchmark of protein language models like ESM-2 against ClinVar variants, comparing how well open models predict pathogenicity versus tools like AlphaMissense\n\nYou can follow along on the projects page or in the blog."
+  },
+  {
+    "objectID": "about.html#how-i-got-here",
+    "href": "about.html#how-i-got-here",
+    "title": "About",
+    "section": "How I got here",
+    "text": "How I got here\nI’m currently completing my undergraduate degree in Buenos Aires, and somewhere along the way I got pulled into computational biology and never looked back. What started as curiosity about how genomes work turned into a fascination with the algorithms and models that make sense of them — and from there, into wanting to actually build the tools myself rather than just use them.\nIn parallel with my studies, I work in the biotech/pharma industry, where I get to apply structural bioinformatics and machine learning to real problems. That combination — academic foundations during the day, applied work in the trenches — is what shapes how I think about this field. I’ve learned that the gap between “this works in the paper” and “this works in production” is enormous, and most of the interesting problems live in that gap.\nWhat pulled me toward this specific niche was realizing how much biological signal still gets lost when people analyze sequence data without thinking about structure. AlphaFold changed what’s possible — but the tooling around it is still rough, and most biologists don’t have time to learn ten new frameworks just to ask a structural question. I want to help close that gap."
+  },
+  {
+    "objectID": "about.html#what-i-value-in-my-work",
+    "href": "about.html#what-i-value-in-my-work",
+    "title": "About",
+    "section": "What I value in my work",
+    "text": "What I value in my work\n\nReproducibility is non-negotiable. Every project ships with environment files, a Docker image, and tests. If you can’t git clone and run it, it doesn’t count.\nOpen source by default. All my projects are MIT-licensed unless there’s a strong reason otherwise. Code that sits behind a paywall doesn’t move the field.\nDocumentation as a first-class deliverable. A tool no one knows how to use isn’t a tool. I write READMEs, tutorials, and blog posts as carefully as I write the code itself.\nHonest benchmarks. I’d rather publish a result that says “this model didn’t work as well as advertised” than overstate what I built.\nLearning in public. I’m still early in my career and I don’t pretend otherwise. The blog reflects what I’m actually figuring out, not what I’ve already mastered."
+  },
+  {
+    "objectID": "about.html#how-i-can-help-you",
+    "href": "about.html#how-i-can-help-you",
+    "title": "About",
+    "section": "How I can help you",
+    "text": "How I can help you\nIf you’re a researcher, student, or team working on:\n\nSetting up reproducible structural bioinformatics pipelines\nApplying protein or DNA language models to your data\nBuilding interactive tools for exploring genomic or protein data\nDesigning a variant-effect analysis from public datasets\n\nI’m happy to chat — send me an email at the address below.\nIf you’re a student in Argentina or LATAM trying to break into bioinformatics, please reach out. I remember (very recently) how confusing it was to figure out what to learn and in what order, and I’d love to help shorten that curve for you."
+  },
+  {
+    "objectID": "about.html#get-in-touch",
+    "href": "about.html#get-in-touch",
+    "title": "About",
+    "section": "Get in touch",
+    "text": "Get in touch\nThe best ways to reach me:\n\nEmail: hello@brunogalvan.com.ar — for serious inquiries, collaborations, or longer questions\nGitHub: @bruno-g-galvan — open an issue on any of my repos, or just star things you find useful\nLinkedIn: /in/bruno-galvan — for professional conversations\n\nI write occasionally about what I’m learning. The blog has an RSS feed if you’d rather follow that way.\n\nThis site is built with Quarto and hosted on GitHub Pages. Source code is on GitHub.\nLeer esta página en español →"
+  },
+  {
+    "objectID": "about-es.html",
+    "href": "about-es.html",
+    "title": "Sobre mí",
+    "section": "",
+    "text": "Soy bioinformático y vivo en Buenos Aires. Trabajo en la intersección entre estructura de proteínas y machine learning aplicado a genómica. Construyo herramientas open source que ayudan a investigadores a conectar ambos mundos — porque entender qué hace una variante genética muchas veces requiere mirar la proteína que produce.\nActualmente estoy terminando mi carrera de grado mientras trabajo en la industria. Mucho de mi mejor aprendizaje pasa en esa brecha entre lo que enseñan en la facultad y lo que los proyectos reales realmente necesitan — escribo acá para documentar lo que voy aprendiendo en el camino."
+  },
+  {
+    "objectID": "about-es.html#hola-soy-bruno",
+    "href": "about-es.html#hola-soy-bruno",
+    "title": "Sobre mí",
+    "section": "",
+    "text": "Soy bioinformático y vivo en Buenos Aires. Trabajo en la intersección entre estructura de proteínas y machine learning aplicado a genómica. Construyo herramientas open source que ayudan a investigadores a conectar ambos mundos — porque entender qué hace una variante genética muchas veces requiere mirar la proteína que produce.\nActualmente estoy terminando mi carrera de grado mientras trabajo en la industria. Mucho de mi mejor aprendizaje pasa en esa brecha entre lo que enseñan en la facultad y lo que los proyectos reales realmente necesitan — escribo acá para documentar lo que voy aprendiendo en el camino."
+  },
+  {
+    "objectID": "about-es.html#en-qué-estoy-trabajando-ahora",
+    "href": "about-es.html#en-qué-estoy-trabajando-ahora",
+    "title": "Sobre mí",
+    "section": "En qué estoy trabajando ahora",
+    "text": "En qué estoy trabajando ahora\n\nfoldflow — un pipeline en Nextflow que procesa secuencias de proteínas a través de ESMFold, con control de calidad y reportes HTML compartibles\nproteinscope — un paquete Python para detectar pockets y evaluar el impacto de mutaciones sobre estructuras proteicas\nUn benchmark de modelos de lenguaje de proteínas como ESM-2 contra variantes de ClinVar, comparando qué tan bien predicen patogenicidad los modelos open source frente a herramientas como AlphaMissense\n\nPodés seguir el avance en la página de proyectos o en el blog."
+  },
+  {
+    "objectID": "about-es.html#cómo-llegué-hasta-acá",
+    "href": "about-es.html#cómo-llegué-hasta-acá",
+    "title": "Sobre mí",
+    "section": "Cómo llegué hasta acá",
+    "text": "Cómo llegué hasta acá\nEstoy terminando mi carrera de grado en Buenos Aires y, en algún momento del recorrido, me fui metiendo en biología computacional y ya no pude salir. Lo que arrancó como curiosidad por entender cómo funcionan los genomas se transformó en una fascinación por los algoritmos y modelos que los hacen interpretables — y de ahí, en querer construir las herramientas yo mismo en lugar de solo usarlas.\nEn paralelo a la facultad, trabajo en la industria biotecnológica/farmacéutica, donde tengo la oportunidad de aplicar bioinformática estructural y machine learning a problemas reales. Esa combinación — fundamentos académicos durante el día, trabajo aplicado en la trinchera — es lo que moldea mi forma de pensar este campo. Aprendí que la distancia entre “esto funciona en el paper” y “esto funciona en producción” es enorme, y muchos de los problemas más interesantes viven en esa distancia.\nLo que me llevó a este nicho específico fue darme cuenta de cuánta señal biológica se pierde cuando se analizan datos de secuencia sin pensar en la estructura. AlphaFold cambió lo que es posible — pero las herramientas que lo rodean siguen siendo crudas, y la mayoría de los biólogos no tienen tiempo para aprender diez frameworks nuevos solo para hacer una pregunta estructural. Quiero ayudar a cerrar esa brecha."
+  },
+  {
+    "objectID": "about-es.html#lo-que-valoro-en-mi-trabajo",
+    "href": "about-es.html#lo-que-valoro-en-mi-trabajo",
+    "title": "Sobre mí",
+    "section": "Lo que valoro en mi trabajo",
+    "text": "Lo que valoro en mi trabajo\n\nReproducibilidad innegociable. Cada proyecto incluye archivos de entorno, una imagen de Docker y tests. Si no podés hacer git clone y ejecutarlo, no cuenta.\nOpen source por defecto. Todos mis proyectos están bajo licencia MIT salvo que haya una razón fuerte para lo contrario. El código detrás de un paywall no hace avanzar al campo.\nDocumentación como entregable de primera categoría. Una herramienta que nadie sabe cómo usar no es una herramienta. Escribo READMEs, tutoriales y posts con el mismo cuidado con el que escribo el código.\nBenchmarks honestos. Prefiero publicar un resultado que dice “este modelo no funcionó tan bien como prometía” antes que sobrevender lo que construí.\nAprender en público. Estoy temprano en mi carrera y no lo escondo. El blog refleja lo que estoy aprendiendo en este momento, no lo que ya domino."
+  },
+  {
+    "objectID": "about-es.html#cómo-puedo-ayudarte",
+    "href": "about-es.html#cómo-puedo-ayudarte",
+    "title": "Sobre mí",
+    "section": "Cómo puedo ayudarte",
+    "text": "Cómo puedo ayudarte\nSi sos investigador, estudiante, o parte de un equipo trabajando en:\n\nArmar pipelines reproducibles de bioinformática estructural\nAplicar modelos de lenguaje de proteínas o de ADN a tus datos\nConstruir herramientas interactivas para explorar datos genómicos o estructurales\nDiseñar análisis de efecto de variantes a partir de datasets públicos\n\nHablemos — escribime al mail de abajo.\nSi sos estudiante en Argentina o LATAM y querés meterte en bioinformática, escribime. Me acuerdo (muy recientemente) de lo confuso que fue ordenar qué aprender y en qué orden, y me encantaría ayudarte a acortar esa curva."
+  },
+  {
+    "objectID": "about-es.html#cómo-contactarme",
+    "href": "about-es.html#cómo-contactarme",
+    "title": "Sobre mí",
+    "section": "Cómo contactarme",
+    "text": "Cómo contactarme\nLas mejores formas de llegar a mí:\n\nEmail: hello@brunogalvan.com.ar — para consultas serias, colaboraciones, o preguntas largas\nGitHub: @bruno-g-galvan — abrí un issue en cualquiera de mis repos, o dejá una estrella si te resultó útil\nLinkedIn: /in/bruno-galvan — para conversaciones profesionales\n\nEscribo de a poco sobre lo que voy aprendiendo. El blog tiene un feed RSS si preferís seguirlo por ahí.\n\nEste sitio está hecho con Quarto y hospedado en GitHub Pages. El código fuente está en GitHub.\nRead this page in English →"
+  },
+  {
+    "objectID": "projects/foldflow/index.html",
+    "href": "projects/foldflow/index.html",
+    "title": "foldflow",
+    "section": "",
+    "text": "🚧 In active development."
+  },
+  {
+    "objectID": "projects/foldflow/index.html#status",
+    "href": "projects/foldflow/index.html#status",
+    "title": "foldflow",
+    "section": "",
+    "text": "🚧 In active development."
+  },
+  {
+    "objectID": "projects/foldflow/index.html#what-it-does",
+    "href": "projects/foldflow/index.html#what-it-does",
+    "title": "foldflow",
+    "section": "What it does",
+    "text": "What it does\nfoldflow is a Nextflow pipeline that takes a FASTA file of protein sequences and runs them through ESMFold prediction, producing structures, quality control plots, and a shareable HTML summary report per protein."
+  },
+  {
+    "objectID": "projects/foldflow/index.html#why-it-exists",
+    "href": "projects/foldflow/index.html#why-it-exists",
+    "title": "foldflow",
+    "section": "Why it exists",
+    "text": "Why it exists\nMost labs run AlphaFold or ESMFold ad-hoc, which makes results hard to share, hard to reproduce, and hard to compare across runs. foldflow packages the whole workflow — from sequence input to QC-checked output — into a single reproducible pipeline."
+  },
+  {
+    "objectID": "projects/foldflow/index.html#tech-stack",
+    "href": "projects/foldflow/index.html#tech-stack",
+    "title": "foldflow",
+    "section": "Tech stack",
+    "text": "Tech stack\n\nNextflow for orchestration\nESMFold (via Hugging Face) for prediction\nBiopython, py3Dmol for analysis and visualization\nDocker / Singularity containers\nGitHub Actions for CI"
+  },
+  {
+    "objectID": "projects/foldflow/index.html#coming-soon",
+    "href": "projects/foldflow/index.html#coming-soon",
+    "title": "foldflow",
+    "section": "Coming soon",
+    "text": "Coming soon\n\nPublic repository with CI tests\nDocker image on GHCR\nArchitecture diagram and walkthrough blog post\nSubmission as a community pipeline to nf-core"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Notes on structural bioinformatics, machine learning for genomics, and reproducible computational biology.\nThe blog has an RSS feed if you’d rather follow that way.\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects",
+    "section": "",
+    "text": "I work on open-source tools at the intersection of protein structure and machine learning for genomics. Each project is documented end-to-end, with code, examples, and a write-up of the design choices.\nIf you find any of these useful — or want to collaborate — send me an email.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nfoldflow\n\n\n\npipeline\n\nstructural-biology\n\nnextflow\n\nesmfold\n\n\n\nA Nextflow pipeline for protein structure prediction with ESMFold, including QC reports and shareable HTML output.\n\n\n\n\n\nApr 30, 2026\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "foldflow",
+    "section": "",
+    "text": "🚧 In active development."
+  },
+  {
+    "objectID": "index.html#status",
+    "href": "index.html#status",
+    "title": "foldflow",
+    "section": "",
+    "text": "🚧 In active development."
+  },
+  {
+    "objectID": "index.html#what-it-does",
+    "href": "index.html#what-it-does",
+    "title": "foldflow",
+    "section": "What it does",
+    "text": "What it does\nfoldflow is a Nextflow pipeline that takes a FASTA file of protein sequences and runs them through ESMFold prediction, producing structures, quality control plots, and a shareable HTML summary report per protein."
+  },
+  {
+    "objectID": "index.html#why-it-exists",
+    "href": "index.html#why-it-exists",
+    "title": "foldflow",
+    "section": "Why it exists",
+    "text": "Why it exists\nMost labs run AlphaFold or ESMFold ad-hoc, which makes results hard to share, hard to reproduce, and hard to compare across runs. foldflow packages the whole workflow — from sequence input to QC-checked output — into a single reproducible pipeline."
+  },
+  {
+    "objectID": "index.html#tech-stack",
+    "href": "index.html#tech-stack",
+    "title": "foldflow",
+    "section": "Tech stack",
+    "text": "Tech stack\n\nNextflow for orchestration\nESMFold (via Hugging Face) for prediction\nBiopython, py3Dmol for analysis and visualization\nDocker / Singularity containers\nGitHub Actions for CI"
+  },
+  {
+    "objectID": "index.html#coming-soon",
+    "href": "index.html#coming-soon",
+    "title": "foldflow",
+    "section": "Coming soon",
+    "text": "Coming soon\n\nPublic repository with CI tests\nDocker image on GHCR\nArchitecture diagram and walkthrough blog post\nSubmission as a community pipeline to nf-core"
   }
 ]
