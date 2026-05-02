@@ -150,7 +150,6 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#why-half-precision-on-the-gpu" id="toc-why-half-precision-on-the-gpu" class="nav-link" data-scroll-target="#why-half-precision-on-the-gpu">Why half precision on the GPU</a></li>
   <li><a href="#the-wsl2-decision" id="toc-the-wsl2-decision" class="nav-link" data-scroll-target="#the-wsl2-decision">The WSL2 decision</a></li>
   <li><a href="#what-the-plddt-scores-actually-tell-you" id="toc-what-the-plddt-scores-actually-tell-you" class="nav-link" data-scroll-target="#what-the-plddt-scores-actually-tell-you">What the pLDDT scores actually tell you</a></li>
-  <li><a href="#what-v0.1-doesnt-do-deliberately" id="toc-what-v0.1-doesnt-do-deliberately" class="nav-link" data-scroll-target="#what-v0.1-doesnt-do-deliberately">What v0.1 doesn’t do — deliberately</a></li>
   <li><a href="#what-id-do-differently" id="toc-what-id-do-differently" class="nav-link" data-scroll-target="#what-id-do-differently">What I’d do differently</a></li>
   <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s next</a></li>
   </ul>
@@ -258,14 +257,10 @@ ul.task-list li input[type="checkbox"] {
 <p>pLDDT (predicted local distance difference test) is a per-residue confidence metric, not an accuracy metric. A high pLDDT score means the model is confident in its prediction for that residue — not that the prediction is necessarily correct. In practice, high pLDDT regions are usually correct, and low pLDDT regions are usually disordered or uncertain in the real protein too. But the distinction matters for how you use the scores.</p>
 <p>For the three test proteins in foldflow’s test dataset:</p>
 <ul>
-<li><strong>Trp-cage</strong> (20 aa, world’s smallest protein with a defined fold): mean pLDDT 91.4. High confidence throughout, slightly lower at the termini. Consistent with a well-packed hydrophobic core.</li>
-<li><strong>Villin headpiece</strong> (35 aa, fast-folding benchmark): mean pLDDT ~88. The three-helix bundle is a stable fold that ESMFold handles well.</li>
-<li><strong>Human preproinsulin</strong> (110 aa): mean pLDDT ~82. The structured A and B chains score highly; the C-peptide (which is intrinsically disordered in isolation) scores lower.</li>
+<li><strong>Trp-cage</strong> (20 aa, world’s smallest protein with a defined fold): mean pLDDT 91.1. High confidence throughout, slightly lower at the termini. Consistent with a well-packed hydrophobic core.</li>
+<li><strong>Villin headpiece</strong> (35 aa, fast-folding benchmark): mean pLDDT 92.5. The three-helix bundle is a stable, compact fold that ESMFold predicts with high confidence.</li>
+<li><strong>Human preproinsulin</strong> (110 aa): mean pLDDT 57.5. This looks low, but it’s biologically correct. Preproinsulin contains a signal peptide and a C-peptide that are intrinsically disordered in isolation — they only adopt structure during processing in the secretory pathway. ESMFold correctly expresses low confidence for those disordered regions. The structured A and B chain cores score considerably higher; the disordered flanking regions pull the mean down. This is the model working as intended, not a pipeline failure. ## What v0.1 doesn’t do — deliberately</li>
 </ul>
-<p>These are real biological signals, not artifacts. The model has learned that disordered regions are uncertain by nature, and it expresses that uncertainty through lower pLDDT scores.</p>
-</section>
-<section id="what-v0.1-doesnt-do-deliberately" class="level2">
-<h2 class="anchored" data-anchor-id="what-v0.1-doesnt-do-deliberately">What v0.1 doesn’t do — deliberately</h2>
 <p>A few things I considered including and decided against.</p>
 <p><strong>Parallel GPU prediction.</strong> Running multiple ESMFold predictions simultaneously on the same GPU would speed up batch processing. I excluded it from v0.1 because GPU memory management across parallel processes adds complexity, and the pipeline already handles parallelism correctly at the Nextflow level — if you have multiple GPUs, Nextflow will use them. Single-GPU parallelism is an optimization for v0.2 or later.</p>
 <p><strong>Automatic MSA generation.</strong> ColabFold uses MMseqs2 to generate multiple sequence alignments for higher-accuracy prediction. I left this out entirely because it requires database setup and changes the pipeline’s dependency profile significantly. ESMFold without MSA is the right default for v0.1’s use case.</p>
