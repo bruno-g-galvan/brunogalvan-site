@@ -1,12 +1,15 @@
 [
   {
-    "listing": "/blog.html",
-    "items": []
-  },
-  {
     "listing": "/projects.html",
     "items": [
       "/projects/foldflow/index.html"
+    ]
+  },
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/protein-structure-pipeline-landscape-2026/index.html",
+      "/mnt/user-data/outputs/posts/welcome/index.html"
     ]
   }
 ]

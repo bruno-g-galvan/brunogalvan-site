@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Bruno Galván">
+<meta name="dcterms.date" content="2026-04-30">
+<meta name="description" content="A survey of the tools that exist today for running structure prediction at scale, why nf-core/proteinfold is impressive and still not enough for everyone, and what that gap means for a project I’m building.">
 
-<title>Blog – Bruno Galván</title>
+<title>The protein structure prediction pipeline landscape in 2026 — and what’s still missing – Bruno Galván</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,25 +29,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6dce83697ef593b6f21f66f8d1a1696b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-6dce83697ef593b6f21f66f8d1a1696b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -72,68 +73,10 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-reading-time','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Bruno Galván" href="blog.xml" data-external="1"></head>
+<link rel="stylesheet" href="../../styles.css">
+</head>
 
 <body class="nav-fixed quarto-light">
 
@@ -142,7 +85,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Bruno Galván</span>
     </a>
   </div>
@@ -153,19 +96,19 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./projects.html"> 
+    <a class="nav-link" href="../../projects.html"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./blog.html" aria-current="page"> 
+    <a class="nav-link" href="../../blog.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
 </ul>
@@ -181,7 +124,7 @@ window.Quarto = {
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about-es.html"> 
+    <a class="nav-link" href="../../about-es.html"> 
 <span class="menu-text">ES</span></a>
   </li>  
 </ul>
@@ -192,25 +135,67 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ZXNtZm9sZA==">esmfold <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Zm9sZGZsb3c=">foldflow <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWV0YQ==">meta <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bmV4dGZsb3c=">nextflow <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cGlwZWxpbmVz">pipelines <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c3RydWN0dXJhbC1iaW9pbmZvcm1hdGljcw==">structural-bioinformatics <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#whats-actually-out-there" id="toc-whats-actually-out-there" class="nav-link active" data-scroll-target="#whats-actually-out-there">What’s actually out there</a>
+  <ul class="collapse">
+  <li><a href="#the-prediction-tools-themselves" id="toc-the-prediction-tools-themselves" class="nav-link" data-scroll-target="#the-prediction-tools-themselves">The prediction tools themselves</a></li>
+  <li><a href="#the-pipeline-layer-what-exists" id="toc-the-pipeline-layer-what-exists" class="nav-link" data-scroll-target="#the-pipeline-layer-what-exists">The pipeline layer: what exists</a></li>
+  </ul></li>
+  <li><a href="#whats-still-missing" id="toc-whats-still-missing" class="nav-link" data-scroll-target="#whats-still-missing">What’s still missing</a>
+  <ul class="collapse">
+  <li><a href="#the-just-run-esmfold-on-these-50-sequences-problem" id="toc-the-just-run-esmfold-on-these-50-sequences-problem" class="nav-link" data-scroll-target="#the-just-run-esmfold-on-these-50-sequences-problem">1. The “just run ESMFold on these 50 sequences” problem</a></li>
+  <li><a href="#the-shareable-report-gap" id="toc-the-shareable-report-gap" class="nav-link" data-scroll-target="#the-shareable-report-gap">2. The shareable report gap</a></li>
+  <li><a href="#connecting-structure-to-downstream-analysis" id="toc-connecting-structure-to-downstream-analysis" class="nav-link" data-scroll-target="#connecting-structure-to-downstream-analysis">3. Connecting structure to downstream analysis</a></li>
+  </ul></li>
+  <li><a href="#what-foldflow-is-trying-to-do-about-it" id="toc-what-foldflow-is-trying-to-do-about-it" class="nav-link" data-scroll-target="#what-foldflow-is-trying-to-do-about-it">What foldflow is trying to do about it</a></li>
+  <li><a href="#an-honest-admission" id="toc-an-honest-admission" class="nav-link" data-scroll-target="#an-honest-admission">An honest admission</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Blog</h1>
+<h1 class="title">The protein structure prediction pipeline landscape in 2026 — and what’s still missing</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">structural-bioinformatics</div>
+    <div class="quarto-category">nextflow</div>
+    <div class="quarto-category">esmfold</div>
+    <div class="quarto-category">pipelines</div>
+    <div class="quarto-category">foldflow</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A survey of the tools that exist today for running structure prediction at scale, why nf-core/proteinfold is impressive and still not enough for everyone, and what that gap means for a project I’m building.
+  </div>
 </div>
 
 
+<div class="quarto-title-meta">
 
-<div class="quarto-title-meta column-page-left">
-
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Bruno Galván </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 30, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -220,71 +205,74 @@ window.Quarto = {
 </header>
 
 
-<p>Notes on structural bioinformatics, machine learning for genomics, and reproducible computational biology.</p>
-<p>The blog has an <a href="blog.xml">RSS feed</a> if you’d rather follow that way.</p>
+<p>Something happened in structural biology between 2020 and now that still doesn’t get enough attention in how we talk about computational workflows.</p>
+<p>It’s not AlphaFold — everyone talks about AlphaFold. It’s what came <em>after</em> AlphaFold: the explosion of prediction tools that followed, each with different tradeoffs, different requirements, and different ideas about what “a pipeline” even means. AlphaFold3, Chai-1, and Boltz-2 can now accurately model protein structures as well as predict protein-complex formation with a variety of substrates at atomic resolution. We went from “we can predict monomers pretty well” to “we can predict complexes with ligands, DNA, RNA, and post-translational modifications” in a few years.</p>
+<p>The tooling hasn’t quite kept up. And that gap is the reason I’m building <a href="https://github.com/bruno-g-galvan/foldflow">foldflow</a>.</p>
+<section id="whats-actually-out-there" class="level2">
+<h2 class="anchored" data-anchor-id="whats-actually-out-there">What’s actually out there</h2>
+<p>Let me survey the landscape honestly, because most blog posts about this topic either treat every tool as equally useful or pretend the community pipeline solves everything.</p>
+<section id="the-prediction-tools-themselves" class="level3">
+<h3 class="anchored" data-anchor-id="the-prediction-tools-themselves">The prediction tools themselves</h3>
+<p>At the core, you have several prediction tools with genuinely different characteristics:</p>
+<p><strong>AlphaFold2 / AlphaFold3</strong> — the benchmark. AlphaFold2 achieved the highest median TM-score (0.96), highest median GDT-TS (94%), and lowest median RMSD (1.30 Å) in recent benchmarks. The accuracy is unmatched for most use cases. The cost: it requires multiple sequence alignments (MSAs), which means downloading and searching against databases that run to terabytes, and prediction times of tens of minutes per protein.</p>
+<p><strong>ESMFold</strong> — Meta’s protein language model approach. ESMFold achieves a TM-score of 0.95, GDT-TS of 90%, and RMSD of 1.74 Å — slightly behind AlphaFold2 in accuracy, but requiring no MSA at all. You give it a sequence, it gives you a structure in seconds on a laptop CPU or faster on a GPU. That tradeoff is real and worth taking seriously: for screening large batches of sequences where you want “good enough” fast, ESMFold is the right answer.</p>
+<p><strong>ColabFold</strong> — AlphaFold2 accuracy with a much faster MSA step, using MMseqs2 instead of the original HHblits-based search. The sweet spot between quality and speed.</p>
+<p><strong>Newer models</strong> — Boltz-2, Chai-1, HelixFold3, and others are pushing into complex and multi-chain prediction territory. The landscape now includes AlphaFold 2 and 3, Boltz 1 and 2, ColabFold, ESMFold, HelixFold, RosettaFoldAA, and RosettaFold2NA. The space is moving fast.</p>
+</section>
+<section id="the-pipeline-layer-what-exists" class="level3">
+<h3 class="anchored" data-anchor-id="the-pipeline-layer-what-exists">The pipeline layer: what exists</h3>
+<p>The most complete solution available today is <strong>nf-core/proteinfold</strong>. The pipeline integrates several popular methods and following structure prediction, generates an interactive report that allows users to explore and compare predicted models together with standardized confidence metrics, harmonized across methods for consistent interpretation.</p>
+<p>This is genuinely impressive. It wraps multiple prediction tools under one interface, handles database downloads, runs on HPC and cloud, includes interactive reports, and follows nf-core’s rigorous quality standards. It uses Docker/Singularity containers making installation trivial and results highly reproducible.</p>
+<p>If you’re at a large institution with an HPC and a system administrator, <code>nf-core/proteinfold</code> is probably what you should use. Full stop.</p>
+<p>But here’s the thing — a lot of us are not at large institutions with HPCs. And even for those who are, the pipeline carries significant overhead.</p>
+</section>
+</section>
+<section id="whats-still-missing" class="level2">
+<h2 class="anchored" data-anchor-id="whats-still-missing">What’s still missing</h2>
+<p>After spending time with <code>nf-core/proteinfold</code> and the broader ecosystem, I keep running into the same friction points. None of them are bugs or failings of the tools — they’re just gaps that the existing solutions weren’t designed to fill.</p>
+<section id="the-just-run-esmfold-on-these-50-sequences-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-just-run-esmfold-on-these-50-sequences-problem">1. The “just run ESMFold on these 50 sequences” problem</h3>
+<p><code>nf-core/proteinfold</code> is built for comprehensiveness and scale. It downloads databases, sets up infrastructure, and handles edge cases across many backends. That’s the right design for running AlphaFold2 at scale on an HPC.</p>
+<p>But if you have 50 sequences, a laptop or a cloud VM, and you want structures plus a QC summary you can email to a collaborator — the overhead of setting up nf-core/proteinfold is real. The pipeline assumes more infrastructure than many small labs or individual researchers have.</p>
+<p>ESMFold specifically doesn’t need databases. It needs a GPU (or patience on a CPU) and the model weights. A pipeline designed around ESMFold’s architecture could be genuinely lightweight — no 3 TB database, no complex setup, just sequences in and structures out.</p>
+</section>
+<section id="the-shareable-report-gap" class="level3">
+<h3 class="anchored" data-anchor-id="the-shareable-report-gap">2. The shareable report gap</h3>
+<p>nf-core/proteinfold generates an interactive report. That report is great if you have access to the output directory. But if you want to send a collaborator — say, a wet-lab biologist who doesn’t have server access — a single file they can open in a browser and explore, you need something self-contained.</p>
+<p>A self-contained HTML report that embeds the confidence plots, structure metrics, and summary statistics for a whole batch of predictions is surprisingly hard to find. Most tools output files; few of them produce something you can just email.</p>
+</section>
+<section id="connecting-structure-to-downstream-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="connecting-structure-to-downstream-analysis">3. Connecting structure to downstream analysis</h3>
+<p>This is the gap I care about most, because it connects to my broader niche: using structure to understand variants.</p>
+<p>Most structure prediction pipelines stop at the PDB file. They produce a structure and consider the job done. But in many real workflows, the structure is a means to an end — you want to know which residues are in a binding pocket, which variants might destabilize the fold, or how a mutation changes the predicted structure.</p>
+<p>The connection between “run structure prediction” and “analyze the structure to answer a biological question” is still largely manual. You predict structures with one tool, then open them in PyMOL or ChimeraX, then run separate analysis scripts, then manually compile the results.</p>
+<p>That handoff is where most of the time goes, and it’s also where most of the reproducibility problems live.</p>
+</section>
+</section>
+<section id="what-foldflow-is-trying-to-do-about-it" class="level2">
+<h2 class="anchored" data-anchor-id="what-foldflow-is-trying-to-do-about-it">What foldflow is trying to do about it</h2>
+<p>I’m building <a href="https://github.com/bruno-g-galvan/foldflow">foldflow</a> to address specifically the first two problems, with the third one in mind as a future direction.</p>
+<p>The design goals:</p>
+<ul>
+<li><strong>Lightweight by default.</strong> Target the ESMFold use case first — no database setup, runs on a single machine, GPU optional. Good enough quality for most screening tasks.</li>
+<li><strong>Shareable output as the primary deliverable.</strong> The HTML report is the product, not a side effect. It should be a file you can email.</li>
+<li><strong>Clean enough to build on.</strong> The codebase should be easy to extend — adding a pocket detection step downstream, or a variant scoring module, shouldn’t require understanding a 5000-line pipeline.</li>
+</ul>
+<p>This is not a replacement for <code>nf-core/proteinfold</code>. For comprehensive, multi-method, HPC-scale prediction, that pipeline is the right tool. <code>foldflow</code> is for a different use case: the researcher or small lab that wants reproducible, shareable structure prediction results without significant infrastructure overhead.</p>
+</section>
+<section id="an-honest-admission" class="level2">
+<h2 class="anchored" data-anchor-id="an-honest-admission">An honest admission</h2>
+<p>I’m writing this before <code>foldflow</code> actually does any of the above. The repo exists, the design is documented, and the code is in progress. I’m writing this post now because the design thinking is useful independent of the implementation status, and because writing it publicly is how I hold myself accountable to finishing it.</p>
+<p>That’s the other thing the existing tools share: they were all written by teams at well-resourced institutions. Building and maintaining a good bioinformatics pipeline as a single developer in parallel with studying is slower. I’m not going to pretend otherwise.</p>
+<p>If you’re working on something similar, or you’ve had the same frustrations with the current tooling, I’d genuinely like to know. Open an issue on the <a href="https://github.com/bruno-g-galvan/foldflow">foldflow repo</a> or email me at hello@brunogalvan.com.ar. The design is still malleable, and real use cases are more useful than hypothetical ones.</p>
+<p>The next post will be more concrete: setting up ESMFold locally, what the experience is actually like, and what the first version of <code>foldflow</code> looks like as it starts to take shape.</p>
+<hr>
+<p><em>If you found this useful, the blog has an <a href="../../blog.xml">RSS feed</a>. I write about structural bioinformatics, ML for genomics, and reproducible computational biology.</em></p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="c3RydWN0dXJhbC1iaW9pbmZvcm1hdGljcyUyQ25leHRmbG93JTJDZXNtZm9sZCUyQ3BpcGVsaW5lcyUyQ2ZvbGRmbG93" data-listing-date-sort="1777507200000" data-listing-file-modified-sort="1777743487820" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1240">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/protein-structure-pipeline-landscape-2026/index.html" class="no-external">The protein structure prediction pipeline landscape in 2026 — and what’s still missing</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('c3RydWN0dXJhbC1iaW9pbmZvcm1hdGljcw=='); return false;">structural-bioinformatics</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bmV4dGZsb3c='); return false;">nextflow</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZXNtZm9sZA=='); return false;">esmfold</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('cGlwZWxpbmVz'); return false;">pipelines</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Zm9sZGZsb3c='); return false;">foldflow</div>
-
-</div>
-<div class="delink listing-description"><a href="./posts/protein-structure-pipeline-landscape-2026/index.html" class="no-external">
-<p>A survey of the tools that exist today for running structure prediction at scale, why nf-core/proteinfold is impressive and still not enough for everyone, and what that gap means for a project I’m building.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/protein-structure-pipeline-landscape-2026/index.html" class="no-external">
-<div class="listing-date">
-Apr 30, 2026
-</div>
-<div class="listing-reading-time">7 min</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="bWV0YQ==" data-listing-date-sort="1777507200000" data-listing-file-modified-sort="1777743487819" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="45">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./mnt/user-data/outputs/posts/welcome/index.html" class="no-external">Hello</a>
-</h3>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWV0YQ=='); return false;">meta</div>
-
-</div>
-<div class="delink listing-description"><a href="./mnt/user-data/outputs/posts/welcome/index.html" class="no-external">
-<p>What this site is, and what’s coming.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./mnt/user-data/outputs/posts/welcome/index.html" class="no-external">
-<div class="listing-date">
-Apr 30, 2026
-</div>
-<div class="listing-reading-time">1 min</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
