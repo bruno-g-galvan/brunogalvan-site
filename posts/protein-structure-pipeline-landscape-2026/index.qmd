@@ -1,0 +1,94 @@
+---
+title: "The protein structure prediction pipeline landscape in 2026 — and what's still missing"
+description: "A survey of the tools that exist today for running structure prediction at scale, why nf-core/proteinfold is impressive and still not enough for everyone, and what that gap means for a project I'm building."
+author: "Bruno Galván"
+date: 2026-04-30
+categories: [structural-bioinformatics, nextflow, esmfold, pipelines, foldflow]
+image: thumbnail.png
+---
+
+Something happened in structural biology between 2020 and now that still doesn't get enough attention in how we talk about computational workflows.
+
+It's not AlphaFold — everyone talks about AlphaFold. It's what came *after* AlphaFold: the explosion of prediction tools that followed, each with different tradeoffs, different requirements, and different ideas about what "a pipeline" even means. AlphaFold3, Chai-1, and Boltz-2 can now accurately model protein structures as well as predict protein-complex formation with a variety of substrates at atomic resolution. We went from "we can predict monomers pretty well" to "we can predict complexes with ligands, DNA, RNA, and post-translational modifications" in a few years.
+
+The tooling hasn't quite kept up. And that gap is the reason I'm building [foldflow](https://github.com/bruno-g-galvan/foldflow).
+
+## What's actually out there
+
+Let me survey the landscape honestly, because most blog posts about this topic either treat every tool as equally useful or pretend the community pipeline solves everything.
+
+### The prediction tools themselves
+
+At the core, you have several prediction tools with genuinely different characteristics:
+
+**AlphaFold2 / AlphaFold3** — the benchmark. AlphaFold2 achieved the highest median TM-score (0.96), highest median GDT-TS (94%), and lowest median RMSD (1.30 Å) in recent benchmarks. The accuracy is unmatched for most use cases. The cost: it requires multiple sequence alignments (MSAs), which means downloading and searching against databases that run to terabytes, and prediction times of tens of minutes per protein.
+
+**ESMFold** — Meta's protein language model approach. ESMFold achieves a TM-score of 0.95, GDT-TS of 90%, and RMSD of 1.74 Å — slightly behind AlphaFold2 in accuracy, but requiring no MSA at all. You give it a sequence, it gives you a structure in seconds on a laptop CPU or faster on a GPU. That tradeoff is real and worth taking seriously: for screening large batches of sequences where you want "good enough" fast, ESMFold is the right answer.
+
+**ColabFold** — AlphaFold2 accuracy with a much faster MSA step, using MMseqs2 instead of the original HHblits-based search. The sweet spot between quality and speed.
+
+**Newer models** — Boltz-2, Chai-1, HelixFold3, and others are pushing into complex and multi-chain prediction territory. The landscape now includes AlphaFold 2 and 3, Boltz 1 and 2, ColabFold, ESMFold, HelixFold, RosettaFoldAA, and RosettaFold2NA. The space is moving fast.
+
+### The pipeline layer: what exists
+
+The most complete solution available today is **nf-core/proteinfold**. The pipeline integrates several popular methods and following structure prediction, generates an interactive report that allows users to explore and compare predicted models together with standardized confidence metrics, harmonized across methods for consistent interpretation.
+
+This is genuinely impressive. It wraps multiple prediction tools under one interface, handles database downloads, runs on HPC and cloud, includes interactive reports, and follows nf-core's rigorous quality standards. It uses Docker/Singularity containers making installation trivial and results highly reproducible.
+
+If you're at a large institution with an HPC and a system administrator, `nf-core/proteinfold` is probably what you should use. Full stop.
+
+But here's the thing — a lot of us are not at large institutions with HPCs. And even for those who are, the pipeline carries significant overhead.
+
+## What's still missing
+
+After spending time with `nf-core/proteinfold` and the broader ecosystem, I keep running into the same friction points. None of them are bugs or failings of the tools — they're just gaps that the existing solutions weren't designed to fill.
+
+### 1. The "just run ESMFold on these 50 sequences" problem
+
+`nf-core/proteinfold` is built for comprehensiveness and scale. It downloads databases, sets up infrastructure, and handles edge cases across many backends. That's the right design for running AlphaFold2 at scale on an HPC.
+
+But if you have 50 sequences, a laptop or a cloud VM, and you want structures plus a QC summary you can email to a collaborator — the overhead of setting up nf-core/proteinfold is real. The pipeline assumes more infrastructure than many small labs or individual researchers have.
+
+ESMFold specifically doesn't need databases. It needs a GPU (or patience on a CPU) and the model weights. A pipeline designed around ESMFold's architecture could be genuinely lightweight — no 3 TB database, no complex setup, just sequences in and structures out.
+
+### 2. The shareable report gap
+
+nf-core/proteinfold generates an interactive report. That report is great if you have access to the output directory. But if you want to send a collaborator — say, a wet-lab biologist who doesn't have server access — a single file they can open in a browser and explore, you need something self-contained.
+
+A self-contained HTML report that embeds the confidence plots, structure metrics, and summary statistics for a whole batch of predictions is surprisingly hard to find. Most tools output files; few of them produce something you can just email.
+
+### 3. Connecting structure to downstream analysis
+
+This is the gap I care about most, because it connects to my broader niche: using structure to understand variants.
+
+Most structure prediction pipelines stop at the PDB file. They produce a structure and consider the job done. But in many real workflows, the structure is a means to an end — you want to know which residues are in a binding pocket, which variants might destabilize the fold, or how a mutation changes the predicted structure.
+
+The connection between "run structure prediction" and "analyze the structure to answer a biological question" is still largely manual. You predict structures with one tool, then open them in PyMOL or ChimeraX, then run separate analysis scripts, then manually compile the results.
+
+That handoff is where most of the time goes, and it's also where most of the reproducibility problems live.
+
+## What foldflow is trying to do about it
+
+I'm building [foldflow](https://github.com/bruno-g-galvan/foldflow) to address specifically the first two problems, with the third one in mind as a future direction.
+
+The design goals:
+
+- **Lightweight by default.** Target the ESMFold use case first — no database setup, runs on a single machine, GPU optional. Good enough quality for most screening tasks.
+- **Shareable output as the primary deliverable.** The HTML report is the product, not a side effect. It should be a file you can email.
+- **Clean enough to build on.** The codebase should be easy to extend — adding a pocket detection step downstream, or a variant scoring module, shouldn't require understanding a 5000-line pipeline.
+
+This is not a replacement for `nf-core/proteinfold`. For comprehensive, multi-method, HPC-scale prediction, that pipeline is the right tool. `foldflow` is for a different use case: the researcher or small lab that wants reproducible, shareable structure prediction results without significant infrastructure overhead.
+
+## An honest admission
+
+I'm writing this before `foldflow` actually does any of the above. The repo exists, the design is documented, and the code is in progress. I'm writing this post now because the design thinking is useful independent of the implementation status, and because writing it publicly is how I hold myself accountable to finishing it.
+
+That's the other thing the existing tools share: they were all written by teams at well-resourced institutions. Building and maintaining a good bioinformatics pipeline as a single developer in parallel with studying is slower. I'm not going to pretend otherwise.
+
+If you're working on something similar, or you've had the same frustrations with the current tooling, I'd genuinely like to know. Open an issue on the [foldflow repo](https://github.com/bruno-g-galvan/foldflow) or email me at hello@brunogalvan.com.ar. The design is still malleable, and real use cases are more useful than hypothetical ones.
+
+The next post will be more concrete: setting up ESMFold locally, what the experience is actually like, and what the first version of `foldflow` looks like as it starts to take shape.
+
+---
+
+*If you found this useful, the blog has an [RSS feed](/blog.xml). I write about structural bioinformatics, ML for genomics, and reproducible computational biology.*
