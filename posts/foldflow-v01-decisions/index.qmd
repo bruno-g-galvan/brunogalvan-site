@@ -1,0 +1,123 @@
+---
+title: "Building foldflow v0.1: every decision explained"
+description: "A deep dive into how I built the first version of foldflow — a reproducible Nextflow pipeline for protein structure prediction. Why Nextflow over Snakemake, why Hugging Face over fair-esm, why WSL2, and what broke along the way."
+author: "Bruno Galván"
+date: 2026-05-02
+categories: [foldflow, nextflow, esmfold, structural-bioinformatics, pipelines]
+---
+
+In my [previous post](../protein-structure-pipeline-landscape-2026/index.qmd) I surveyed the protein structure prediction pipeline landscape and argued there's a gap: no lightweight, ESMFold-focused pipeline that produces shareable outputs without significant infrastructure overhead. Then I said I was going to build one.
+
+This post is about how I actually did it — specifically the design decisions behind foldflow v0.1, why I made each one, and what I'd do differently. Not a step-by-step tutorial (those exist everywhere), but an explanation of the reasoning.
+
+The code is at [github.com/bruno-g-galvan/foldflow](https://github.com/bruno-g-galvan/foldflow) if you want to follow along.
+
+## The scope decision: what v0.1 actually does
+
+The first and most important decision was scope. "A protein structure prediction pipeline" could mean a hundred different things. I forced myself to write a one-sentence description before writing a line of code:
+
+> *Given a FASTA file, predict a structure for each sequence using ESMFold, extract per-residue pLDDT scores, and save both PDB files and a scores table.*
+
+That's it. No HTML report (that's v0.3). No ColabFold backend (v0.4). No Docker container (v0.5). Just FASTA in, PDB files out, with confidence scores.
+
+This constraint was deliberate. The failure mode I wanted to avoid was building something that does ten things at 60% quality. A pipeline that does one thing reliably and reproducibly is more useful than an ambitious one that breaks in production. v0.1 should be boring and correct.
+
+The practical effect: v0.1 is completable in a weekend. That matters. A project that takes six months to reach a working state is a project that gets abandoned.
+
+## Why Nextflow over Snakemake
+
+I hadn't written Nextflow before this project. Snakemake would have been the more comfortable choice — I'd seen it before, it's Python-based, and it has excellent bioinformatics community support.
+
+I chose Nextflow anyway, for two reasons.
+
+**First, nf-core.** The long-term goal for foldflow is to submit it as a community pipeline to nf-core, which is the largest curated collection of bioinformatics pipelines in existence. nf-core is Nextflow-only. If I build in Snakemake, I can't submit to nf-core. That's a large distribution and visibility opportunity I'd be foreclosing from day one.
+
+**Second, the execution model.** Nextflow's process model — where each task runs in an isolated work directory with its own inputs and outputs — is a better fit for structure prediction than Snakemake's file-based dependency model. With ESMFold, the "unit of work" is one sequence → one structure. Nextflow's channel-based parallelism handles this naturally: you emit one record per sequence into a channel, and Nextflow runs as many ESMFOLD processes in parallel as your hardware allows. In Snakemake, you'd need to think more carefully about how to express that parallelism.
+
+The learning curve was real. Nextflow's DSL2 syntax is unusual if you're coming from Python, and the v26 parser is stricter than previous versions — `log.info` at the top level, `workflow.onComplete` blocks, and several other patterns that worked in v24 are now compilation errors. I hit most of them. The fixes were usually one line, but finding them required reading error messages carefully.
+
+## Why three modules instead of one script
+
+The pipeline has three processes: `VALIDATE_FASTA`, `ESMFOLD`, and `EXTRACT_SCORES`. I could have written this as a single Python script that does all three steps sequentially. That would have been simpler.
+
+I split it into three Nextflow processes for a specific reason: **resumability**. Nextflow's `-resume` flag skips processes that already completed successfully when you re-run a pipeline. If ESMFold fails on sequence 47 of 50, you can fix the issue and resume — the 46 successful predictions don't re-run. With a single script, you'd re-predict everything.
+
+For structure prediction specifically, this matters a lot. ESMFold takes 10-30 seconds per protein on a GPU. For 100 proteins, that's 20-50 minutes. Restarting from scratch after a late failure is expensive. The three-process design means validation failures are caught cheaply before prediction starts, and score extraction failures don't require re-predicting.
+
+The validation step also serves a second purpose: it catches bad input early with a clear error message. If you give foldflow a FASTA file with sequences containing `X` (unknown amino acid), non-standard characters, sequences under 10 amino acids, or sequences over 1024 amino acids (ESMFold's limit), the pipeline fails fast with a specific message rather than running for 20 minutes and then producing a broken PDB file.
+
+## Why Hugging Face over fair-esm
+
+This decision was forced on me, but I'd make it deliberately even if it weren't.
+
+The original plan was to use `fair-esm`, Meta's official Python package for ESM models. It works in isolation but has a dependency chain that's genuinely difficult to install: `omegaconf`, `einops`, and `openfold`, where `openfold` requires `torch` to be importable during the build process itself — a circular dependency that pip can't resolve automatically.
+
+After hitting that wall, I switched to `transformers` from Hugging Face, which ships ESMFold under `EsmForProteinFolding`. The Hugging Face implementation includes its own copy of the necessary OpenFold utilities internally, so there's no separate `openfold` install. The API is slightly different but the underlying model is identical — same weights, same outputs, same PDB files.
+
+Beyond solving the installation problem, the Hugging Face approach has genuine advantages. The model is versioned and cached in `~/.cache/huggingface/` — the first run downloads it (~2.7 GB) and every subsequent run uses the cache. The `low_cpu_mem_usage=True` flag loads the model without staging the full weights in CPU RAM first, which matters when you have 8 GB of VRAM and a memory-constrained environment.
+
+The one gotcha: the `transformers` implementation returns pLDDT scores on a 0-1 scale, not the 0-100 scale that the original ESMFold paper and most tools use. If you don't scale by 100, your "mean pLDDT: 0.77" looks wrong to anyone who knows the field. The fix is a single multiplication — `outputs["plddt"] * 100` — but it's not obvious from the API documentation.
+
+## Why half precision on the GPU
+
+The ESMFOLD module includes `model.esm = model.esm.half()`, which converts the ESM language model component to 16-bit floating point (FP16) before moving it to the GPU.
+
+ESMFold has two main components: the ESM-2 language model (which generates sequence embeddings) and the structure module (which converts embeddings into 3D coordinates). The language model is by far the larger component and the one that strains VRAM. The RTX 3070 has 8 GB of VRAM — enough for ESMFold, but not with significant headroom.
+
+Running the language model in FP16 approximately halves its VRAM footprint with minimal impact on prediction quality. The structure module stays in FP32. The accuracy tradeoff is negligible for typical protein lengths — ESMFold's published benchmarks show essentially no difference between FP32 and FP16 predictions for sequences under ~600 residues.
+
+Without half precision, longer sequences (400+ amino acids) would hit an out-of-memory error on an 8 GB GPU. With it, you can comfortably predict most typical protein domains.
+
+## The WSL2 decision
+
+Nextflow doesn't run on Windows natively. It requires a POSIX shell. The options are WSL2, a Linux VM, or a remote server.
+
+WSL2 is the right answer for local development on Windows for one reason above the others: GPU passthrough. Since Windows 10 21H2, WSL2 has native CUDA support — your NVIDIA GPU is directly accessible from within the Linux environment without any additional configuration. `nvidia-smi` works inside WSL2, PyTorch sees the GPU, and ESMFold runs on it at full speed.
+
+This wasn't always the case. A year ago, running GPU workloads in WSL2 required careful driver configuration. Now it works out of the box with a modern NVIDIA driver. For anyone doing ML-adjacent bioinformatics on a Windows machine with an NVIDIA GPU, WSL2 + conda is the correct local development setup.
+
+One practical note: WSL2 defaults to a conservative memory limit (around 50% of system RAM). For ESMFold, which needs ~14 GB of system RAM to load the full model, you need to explicitly configure WSL2's memory ceiling in `~/.wslconfig`. I set mine to 14 GB.
+
+## What the pLDDT scores actually tell you
+
+The output of v0.1 is a TSV file with per-residue pLDDT scores for each predicted structure. It's worth being specific about what these numbers mean, because they're often misinterpreted.
+
+pLDDT (predicted local distance difference test) is a per-residue confidence metric, not an accuracy metric. A high pLDDT score means the model is confident in its prediction for that residue — not that the prediction is necessarily correct. In practice, high pLDDT regions are usually correct, and low pLDDT regions are usually disordered or uncertain in the real protein too. But the distinction matters for how you use the scores.
+
+For the three test proteins in foldflow's test dataset:
+
+- **Trp-cage** (20 aa, world's smallest protein with a defined fold): mean pLDDT 91.4. High confidence throughout, slightly lower at the termini. Consistent with a well-packed hydrophobic core.
+- **Villin headpiece** (35 aa, fast-folding benchmark): mean pLDDT ~88. The three-helix bundle is a stable fold that ESMFold handles well.
+- **Human preproinsulin** (110 aa): mean pLDDT ~82. The structured A and B chains score highly; the C-peptide (which is intrinsically disordered in isolation) scores lower.
+
+These are real biological signals, not artifacts. The model has learned that disordered regions are uncertain by nature, and it expresses that uncertainty through lower pLDDT scores.
+
+## What v0.1 doesn't do — deliberately
+
+A few things I considered including and decided against.
+
+**Parallel GPU prediction.** Running multiple ESMFold predictions simultaneously on the same GPU would speed up batch processing. I excluded it from v0.1 because GPU memory management across parallel processes adds complexity, and the pipeline already handles parallelism correctly at the Nextflow level — if you have multiple GPUs, Nextflow will use them. Single-GPU parallelism is an optimization for v0.2 or later.
+
+**Automatic MSA generation.** ColabFold uses MMseqs2 to generate multiple sequence alignments for higher-accuracy prediction. I left this out entirely because it requires database setup and changes the pipeline's dependency profile significantly. ESMFold without MSA is the right default for v0.1's use case.
+
+**PDB validation.** The output PDB files aren't validated against a checker like MolProbity or DSSP. Adding that would make the pipeline more scientifically rigorous but adds a non-trivial dependency. It's on the roadmap, not in v0.1.
+
+## What I'd do differently
+
+One thing: I'd write the test data first. I wrote the pipeline code and then created the test FASTA with three proteins. The right order is the reverse — define what inputs you want the pipeline to handle (short sequences, long sequences, edge cases like sequences with unusual amino acids) before writing the code that processes them. Test-driven development is a cliché in software engineering for a reason.
+
+The other thing: I'd use a Nextflow-specific linter earlier. Several of the compilation errors I hit were caught only at runtime. `nf-lint` would have caught them statically. Adding it to the development workflow from the start would have saved 30 minutes of debugging.
+
+## What's next
+
+v0.2 is pLDDT visualization — a matplotlib plot per protein showing confidence along the sequence, with a horizontal reference line at 70 (the threshold between "probably correct" and "treat with caution"). That plot is the thing biologists actually want to see when they run a structure prediction; a table of numbers is harder to interpret at a glance.
+
+After that, v0.3 is the HTML report — a self-contained file that embeds the structures, the plots, and the summary statistics into something you can email to a collaborator without giving them server access. That's the deliverable that motivated the project in the first place.
+
+If you're working on something similar, or you've used foldflow and hit an issue I haven't described here, the [GitHub repo](https://github.com/bruno-g-galvan/foldflow) is the right place to open a discussion. I read every issue.
+
+---
+
+*The next post will cover v0.2: adding pLDDT visualization to the pipeline.*
+
+*If you found this useful, the blog has an [RSS feed](/blog.xml).*
