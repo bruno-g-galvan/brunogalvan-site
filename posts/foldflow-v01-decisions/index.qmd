@@ -86,12 +86,20 @@ pLDDT (predicted local distance difference test) is a per-residue confidence met
 
 For the three test proteins in foldflow's test dataset:
 
-- **Trp-cage** (20 aa, world's smallest protein with a defined fold): mean pLDDT 91.4. High confidence throughout, slightly lower at the termini. Consistent with a well-packed hydrophobic core.
-- **Villin headpiece** (35 aa, fast-folding benchmark): mean pLDDT ~88. The three-helix bundle is a stable fold that ESMFold handles well.
-- **Human preproinsulin** (110 aa): mean pLDDT ~82. The structured A and B chains score highly; the C-peptide (which is intrinsically disordered in isolation) scores lower.
-
-These are real biological signals, not artifacts. The model has learned that disordered regions are uncertain by nature, and it expresses that uncertainty through lower pLDDT scores.
-
+- **Trp-cage** (20 aa, world's smallest protein with a defined fold):
+  mean pLDDT 91.1. High confidence throughout, slightly lower at the
+  termini. Consistent with a well-packed hydrophobic core.
+- **Villin headpiece** (35 aa, fast-folding benchmark): mean pLDDT 92.5.
+  The three-helix bundle is a stable, compact fold that ESMFold predicts
+  with high confidence.
+- **Human preproinsulin** (110 aa): mean pLDDT 57.5. This looks low, but
+  it's biologically correct. Preproinsulin contains a signal peptide and
+  a C-peptide that are intrinsically disordered in isolation — they only
+  adopt structure during processing in the secretory pathway. ESMFold
+  correctly expresses low confidence for those disordered regions. The
+  structured A and B chain cores score considerably higher; the disordered
+  flanking regions pull the mean down. This is the model working as
+  intended, not a pipeline failure.
 ## What v0.1 doesn't do — deliberately
 
 A few things I considered including and decided against.
