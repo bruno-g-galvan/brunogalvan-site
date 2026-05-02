@@ -1,15 +1,16 @@
 [
   {
-    "listing": "/projects.html",
+    "listing": "/blog.html",
     "items": [
-      "/projects/foldflow/index.html"
+      "/posts/foldflow-v01-decisions/index.html",
+      "/posts/protein-structure-pipeline-landscape-2026/index.html",
+      "/mnt/user-data/outputs/posts/welcome/index.html"
     ]
   },
   {
-    "listing": "/blog.html",
+    "listing": "/projects.html",
     "items": [
-      "/posts/protein-structure-pipeline-landscape-2026/index.html",
-      "/mnt/user-data/outputs/posts/welcome/index.html"
+      "/projects/foldflow/index.html"
     ]
   }
 ]
